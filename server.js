@@ -7,11 +7,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// ==========================================
-// UNGA MONGODB ATLAS URL-A INGA PASTE PANRUNGA:
-// (Example: "mongodb+srv://username:password@cluster.mongodb.net/medicare?retryWrites=true&w=majority")
-// ==========================================
-const MONGO_URI = "mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/medicare?retryWrites=true&w=majority";
+// MongoDB Connection (Render-la Environment Variable-ah set panrathu moolama secure-ah irukum)
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error('FATAL ERROR: MONGO_URI is not defined.');
+  process.exit(1);
+}
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully!'))
