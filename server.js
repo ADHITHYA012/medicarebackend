@@ -11,7 +11,7 @@ app.use(cors());
 // UNGA MONGODB ATLAS URL-A INGA PASTE PANRUNGA:
 // (Example: "mongodb+srv://username:password@cluster.mongodb.net/medicare?retryWrites=true&w=majority")
 // ==========================================
-const MONGO_URI = process.env.MONGO_URI || "UNGA_MONGODB_CONNECTION_STRING_INGA_PODUNGA";
+const MONGO_URI = "mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/medicare?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully!'))
