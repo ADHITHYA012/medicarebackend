@@ -7,20 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// MongoDB Connection (Render-la Environment Variable-ah set panrathu moolama secure-ah irukum)
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  console.error('FATAL ERROR: MONGO_URI is not defined.');
-  process.exit(1);
-}
+// Render Environment variables-la irukura MONGO_URI (or DATABASE_URL) automatic-ah eduthukkum
+const MONGO_URI = process.env.MONGO_URI || process.env.DATABASE_URL || "mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/medicare?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully!'))
-  .catch(err => {
-    console.error('MongoDB Connection Error:', err);
-    process.exit(1);
-  });
+  .catch(err => console.error('MongoDB Connection Error:', err));
 
 // User Schema
 const userSchema = new mongoose.Schema({
