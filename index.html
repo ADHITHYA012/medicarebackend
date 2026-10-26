@@ -3,229 +3,510 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medicare+ Complete Universal Portal</title>
+    <title>Medicare+ Complete Universal Health Platform</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f7f6; min-height: 100vh; padding: 20px; display: flex; justify-content: center; align-items: center; }
-        .container { background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 650px; }
-        h2, h3 { color: #2c3e50; text-align: center; margin-bottom: 15px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #333; font-weight: 600; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-        button { width: 100%; padding: 12px; background-color: #0066ff; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        button:hover { background-color: #0052cc; }
-        .toggle-link { text-align: center; margin-top: 15px; font-size: 14px; }
-        .toggle-link a { color: #0066ff; text-decoration: none; font-weight: bold; cursor: pointer; }
-        .dashboard { display: none; }
-        
-        /* Doctor Cards Styling */
-        .doctor-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #f8fafc; }
-        .doctor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .doctor-name { font-weight: bold; color: #1e293b; font-size: 16px; }
-        .specialist-badge { background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-        .doctor-details { font-size: 13px; color: #64748b; margin-bottom: 10px; display: flex; gap: 15px; }
-        
-        .msg-success { color: green; text-align: center; margin-bottom: 10px; font-weight: bold; }
-        .msg-error { color: red; text-align: center; margin-bottom: 10px; font-weight: bold; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: #334155;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #0284c7;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .auth-box {
+            padding: 40px 30px;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #0284c7;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #0369a1;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        .toggle-link a {
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard {
+            display: none;
+            padding: 30px;
+        }
+
+        .welcome-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Live Queue Widget UI */
+        .queue-widget {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .queue-widget h3 {
+            font-size: 18px;
+            color: #0f172a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .queue-stats {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card.blue { background: #e0f2fe; color: #0369a1; }
+        .stat-card.orange { background: #fef3c7; color: #b45309; }
+        .stat-card.green { background: #dcfce7; color: #15803d; }
+
+        .stat-card span {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card h2 {
+            font-size: 24px;
+            margin-top: 6px;
+        }
+
+        /* Doctor Cards Grid */
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .doctor-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .doctor-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #e0f2fe;
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 12px;
+        }
+
+        .doctor-card h4 {
+            font-size: 18px;
+            color: #1e293b;
+        }
+
+        .doctor-card p {
+            font-size: 13px;
+            color: #64748b;
+            margin: 4px 0;
+        }
+
+        .fee-badge {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        .alert-msg {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 12px;
+            display: none;
+            text-align: center;
+        }
+        .alert-error { background: #fee2e2; color: #dc2626; }
+        .alert-success { background: #dcfce7; color: #16a34a; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Auth Section (Login & Register) -->
-    <div id="authSection">
-        <h2 id="formTitle">Medicare+ Portal</h2>
-        <div id="msgBox"></div>
+    <div class="header">
+        <h1>Medicare+ Platform</h1>
+        <p>Smart Live Queue Doctor Appointment & Specialist Discovery</p>
+    </div>
 
-        <div class="form-group">
-            <label>Email Address / User ID</label>
-            <input type="email" id="emailInput" placeholder="24cse055@act.edu.in" required>
+    <!-- AUTH SECTION -->
+    <div id="authSection" class="auth-box">
+        <div id="alertMsg" class="alert-msg"></div>
+
+        <!-- Login Form -->
+        <div id="loginForm">
+            <h2>Patient Login</h2>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="loginEmail" placeholder="e.g. jashwanth@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" required>
+            </div>
+            <button class="btn" onclick="handleLogin()">Sign In</button>
+            <div class="toggle-link">
+                Don't have an account? <a href="#" onclick="toggleAuth(true)">Register Here</a>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="passwordInput" placeholder="Enter password" required>
-        </div>
 
-        <button id="mainBtn" onclick="handleAuth()">Sign In</button>
-
-        <div class="toggle-link">
-            <span id="toggleText">Don't have an account? </span>
-            <a onclick="toggleMode()" id="toggleBtn">Register Here</a>
+        <!-- Register Form -->
+        <div id="registerForm" style="display: none;">
+            <h2>Register New Patient</h2>
+            <div class="form-group">
+                <label>Email Address / User ID</label>
+                <input type="email" id="regEmail" placeholder="e.g. 24cse055@act.edu.in" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="regPassword" placeholder="••••••••" required>
+            </div>
+            <button class="btn" onclick="handleRegister()">Register</button>
+            <div class="toggle-link">
+                Already have an account? <a href="#" onclick="toggleAuth(false)">Login Here</a>
+            </div>
         </div>
     </div>
 
-    <!-- Patient Dashboard Section -->
+    <!-- DASHBOARD SECTION -->
     <div id="dashboardSection" class="dashboard">
-        <h2>Patient Dashboard</h2>
-        <p id="welcomeUser" style="text-align: center; color: #0066ff; margin-bottom: 20px; font-weight: bold;"></p>
-        
-        <div id="bookingMsg"></div>
-
-        <h3>Available Doctors & Specialists</h3>
-
-        <!-- Doctor 1 -->
-        <div class="doctor-card">
-            <div class="doctor-header">
-                <span class="doctor-name">Dr. Rajesh Kumar</span>
-                <span class="specialist-badge">Cardiologist</span>
+        <div class="welcome-bar">
+            <div>
+                <h2 id="welcomeUser">Welcome, Patient!</h2>
+                <p style="font-size: 13px; color: #64748b;">Select a specialist below to book your appointment slot.</p>
             </div>
-            <div class="doctor-details">
-                <span><strong>Experience:</strong> 12+ Years</span>
-                <span><strong>Consultation Fee:</strong> ₹800</span>
-            </div>
-            <button style="padding: 6px 12px; font-size: 13px;" onclick="selectDoctor('Dr. Rajesh Kumar (Cardiologist - ₹800)')">Book Specialist</button>
+            <button onclick="handleLogout()" style="padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer;">Logout</button>
         </div>
 
-        <!-- Doctor 2 -->
-        <div class="doctor-card">
-            <div class="doctor-header">
-                <span class="doctor-name">Dr. Anitha Ramesh</span>
-                <span class="specialist-badge">Dermatologist</span>
+        <!-- LIVE QUEUE TRACKER WIDGET -->
+        <div class="queue-widget">
+            <h3>⏱️ Live Clinic Queue Tracker</h3>
+            <div class="queue-stats">
+                <div class="stat-card blue">
+                    <span>CURRENT SERVING</span>
+                    <h2 id="currentTokenNo">#1</h2>
+                </div>
+                <div class="stat-card orange">
+                    <span>YOUR TOKEN</span>
+                    <h2 id="yourTokenNo">#--</h2>
+                </div>
+                <div class="stat-card green">
+                    <span>EST. WAIT TIME</span>
+                    <h2 id="estWaitTime">0 mins</h2>
+                </div>
             </div>
-            <div class="doctor-details">
-                <span><strong>Experience:</strong> 8+ Years</span>
-                <span><strong>Consultation Fee:</strong> ₹600</span>
-            </div>
-            <button style="padding: 6px 12px; font-size: 13px;" onclick="selectDoctor('Dr. Anitha Ramesh (Dermatologist - ₹600)')">Book Specialist</button>
         </div>
 
-        <!-- Doctor 3 -->
-        <div class="doctor-card">
-            <div class="doctor-header">
-                <span class="doctor-name">Dr. Suresh Verma</span>
-                <span class="specialist-badge">General Physician</span>
+        <!-- BOOKING FORM MODAL / BOX -->
+        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 24px; border: 1px solid #e2e8f0;">
+            <h3 style="margin-bottom: 12px; color: #1e293b;">Book Appointment Slot</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end;">
+                <div class="form-group" style="margin: 0;">
+                    <label>Selected Doctor</label>
+                    <input type="text" id="selectedDoctor" value="Dr. A. Sharma (Cardiology)" readonly style="background: #e2e8f0;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>Appointment Date</label>
+                    <input type="date" id="bookingDate">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>Time Slot</label>
+                    <select id="bookingTime">
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:30 AM">11:30 AM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="04:30 PM">04:30 PM</option>
+                    </select>
+                </div>
+                <button class="btn" style="height: 42px;" onclick="confirmBooking()">Confirm & Save</button>
             </div>
-            <div class="doctor-details">
-                <span><strong>Experience:</strong> 15+ Years</span>
-                <span><strong>Consultation Fee:</strong> ₹500</span>
-            </div>
-            <button style="padding: 6px 12px; font-size: 13px;" onclick="selectDoctor('Dr. Suresh Verma (General Physician - ₹500)')">Book Specialist</button>
         </div>
 
-        <!-- Slot Booking Box -->
-        <div style="margin-top: 25px; padding-top: 15px; border-top: 2px dashed #ccc;">
-            <h3>Confirm Appointment Slot</h3>
-            
-            <div class="form-group">
-                <label>Selected Doctor & Fee</label>
-                <input type="text" id="selectedDoctorInput" placeholder="Click 'Book Specialist' above" readonly required>
+        <!-- SPECIALIST DOCTORS -->
+        <h3 style="margin-bottom: 12px; color: #1e293b;">Available Specialists</h3>
+        <div class="doctor-grid">
+            <div class="doctor-card">
+                <div class="doctor-avatar">👨‍⚕️</div>
+                <h4>Dr. A. Sharma</h4>
+                <p>Cardiology • 12 Yrs Exp</p>
+                <div class="fee-badge">Consultation Fee: ₹800</div>
+                <button class="btn" style="margin-top: 8px; font-size: 14px;" onclick="selectDoctor('Dr. A. Sharma (Cardiology)')">Select Doctor</button>
             </div>
 
-            <div class="form-group">
-                <label>Appointment Date</label>
-                <input type="date" id="appointmentDate" required>
+            <div class="doctor-card">
+                <div class="doctor-avatar">👩‍⚕️</div>
+                <h4>Dr. Priya Patel</h4>
+                <p>Dermatology • 8 Yrs Exp</p>
+                <div class="fee-badge">Consultation Fee: ₹600</div>
+                <button class="btn" style="margin-top: 8px; font-size: 14px;" onclick="selectDoctor('Dr. Priya Patel (Dermatology)')">Select Doctor</button>
             </div>
 
-            <div class="form-group">
-                <label>Available Time Slot</label>
-                <select id="timeSlot">
-                    <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
-                    <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
-                    <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
-                    <option value="06:00 PM - 07:00 PM">06:00 PM - 07:00 PM</option>
-                </select>
+            <div class="doctor-card">
+                <div class="doctor-avatar">👨‍⚕️</div>
+                <h4>Dr. R. Verma</h4>
+                <p>Pediatrics • 10 Yrs Exp</p>
+                <div class="fee-badge">Consultation Fee: ₹500</div>
+                <button class="btn" style="margin-top: 8px; font-size: 14px;" onclick="selectDoctor('Dr. R. Verma (Pediatrics)')">Select Doctor</button>
             </div>
-
-            <button onclick="bookAppointment()">Confirm & Save Booking</button>
-            <button style="background-color: #6c757d; margin-top: 8px;" onclick="logout()">Logout</button>
         </div>
     </div>
 </div>
 
 <script>
-    const API_URL = "https://medicarebackend-1nvu.onrender.com/api";
-    let isLoginMode = true;
-    let currentUserEmail = "";
+    const API_BASE = 'https://medicarebackend-1nvu.onrender.com';
+    let currentUserEmail = '';
 
-    function toggleMode() {
-        isLoginMode = !isLoginMode;
-        document.getElementById('formTitle').innerText = isLoginMode ? "Medicare+ Portal" : "Register New Patient";
-        document.getElementById('mainBtn').innerText = isLoginMode ? "Sign In" : "Register";
-        document.getElementById('toggleText').innerText = isLoginMode ? "Don't have an account? " : "Already have an account? ";
-        document.getElementById('toggleBtn').innerText = isLoginMode ? "Register Here" : "Login Here";
-        document.getElementById('msgBox').innerHTML = "";
+    // Today Date Setup
+    document.getElementById('bookingDate').valueAsDate = new Date();
+
+    function showAlert(msg, isSuccess = false) {
+        const alertBox = document.getElementById('alertMsg');
+        alertBox.innerText = msg;
+        alertBox.className = `alert-msg ${isSuccess ? 'alert-success' : 'alert-error'}`;
+        alertBox.style.display = 'block';
     }
 
-    async function handleAuth() {
-        const email = document.getElementById('emailInput').value;
-        const password = document.getElementById('passwordInput').value;
-        const msgBox = document.getElementById('msgBox');
+    function toggleAuth(showRegister) {
+        document.getElementById('alertMsg').style.display = 'none';
+        document.getElementById('loginForm').style.display = showRegister ? 'none' : 'block';
+        document.getElementById('registerForm').style.display = showRegister ? 'block' : 'none';
+    }
 
-        if(!email || !password) {
-            msgBox.innerHTML = `<p class="msg-error">Please fill all fields!</p>`;
-            return;
-        }
+    async function handleRegister() {
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
 
-        const endpoint = isLoginMode ? '/login' : '/register';
+        if (!email || !password) return showAlert("Please fill all fields!");
 
         try {
-            const res = await fetch(`${API_URL}${endpoint}`, {
+            const res = await fetch(`${API_BASE}/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
-
             const data = await res.json();
 
-            if (res.ok && data.success) {
-                if (isLoginMode) {
-                    currentUserEmail = email;
-                    document.getElementById('authSection').style.display = 'none';
-                    document.getElementById('dashboardSection').style.display = 'block';
-                    document.getElementById('welcomeUser').innerText = `Welcome, ${email}!`;
-                } else {
-                    msgBox.innerHTML = `<p class="msg-success">${data.message}</p>`;
-                    toggleMode();
-                }
+            if (res.ok) {
+                showAlert("Registration Successful! Please login.", true);
+                setTimeout(() => toggleAuth(false), 1500);
             } else {
-                msgBox.innerHTML = `<p class="msg-error">${data.message || 'Authentication failed'}</p>`;
+                showAlert(data.message || "Registration failed.");
             }
         } catch (err) {
-            msgBox.innerHTML = `<p class="msg-error">Server Connection Error!</p>`;
+            showAlert("Server error. Please try again later.");
         }
     }
 
-    function selectDoctor(doctorDetails) {
-        document.getElementById('selectedDoctorInput').value = doctorDetails;
-    }
+    async function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
 
-    async function bookAppointment() {
-        const doctor = document.getElementById('selectedDoctorInput').value;
-        const date = document.getElementById('appointmentDate').value;
-        const slot = document.getElementById('timeSlot').value;
-        const bookingMsg = document.getElementById('bookingMsg');
-
-        if(!doctor) {
-            bookingMsg.innerHTML = `<p class="msg-error">Please select a Doctor first!</p>`;
-            return;
-        }
-
-        if(!date) {
-            bookingMsg.innerHTML = `<p class="msg-error">Please select an Appointment Date!</p>`;
-            return;
-        }
+        if (!email || !password) return showAlert("Please fill all fields!");
 
         try {
-            const res = await fetch(`${API_URL}/book-appointment`, {
+            const res = await fetch(`${API_BASE}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userEmail: currentUserEmail, doctorName: doctor, date, slot })
+                body: JSON.stringify({ email, password })
             });
-
             const data = await res.json();
 
-            if(data.success) {
-                bookingMsg.innerHTML = `<p class="msg-success">🎉 ${data.message}</p>`;
+            if (res.ok) {
+                currentUserEmail = email;
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('dashboardSection').style.display = 'block';
+                document.getElementById('welcomeUser').innerText = `Welcome, ${email}!`;
+                fetchLiveQueue(); // Live Queue Load
             } else {
-                bookingMsg.innerHTML = `<p class="msg-error">Booking failed!</p>`;
+                showAlert(data.message || "Invalid Email or Password.");
             }
-        } catch(err) {
-            bookingMsg.innerHTML = `<p class="msg-error">Server connection error!</p>`;
+        } catch (err) {
+            showAlert("Server error during login.");
         }
     }
 
-    function logout() {
-        location.reload();
+    function handleLogout() {
+        document.getElementById('authSection').style.display = 'block';
+        document.getElementById('dashboardSection').style.display = 'none';
+    }
+
+    function selectDoctor(doctorName) {
+        document.getElementById('selectedDoctor').value = doctorName;
+        fetchLiveQueue();
+    }
+
+    async function confirmBooking() {
+        const doctorName = document.getElementById('selectedDoctor').value;
+        const date = document.getElementById('bookingDate').value;
+        const timeSlot = document.getElementById('bookingTime').value;
+
+        try {
+            const res = await fetch(`${API_BASE}/api/book`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: currentUserEmail, doctorName, date, timeSlot })
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                alert(`🎉 Booking Confirmed!\nYour Token Number: #${data.tokenNumber || 5}`);
+                document.getElementById('yourTokenNo').innerText = `#${data.tokenNumber || 5}`;
+                fetchLiveQueue();
+            } else {
+                alert(data.message || "Booking failed.");
+            }
+        } catch (err) {
+            alert("Booking error!");
+        }
+    }
+
+    async function fetchLiveQueue() {
+        const doctorName = document.getElementById('selectedDoctor').value;
+        const date = document.getElementById('bookingDate').value;
+
+        try {
+            const res = await fetch(`${API_BASE}/api/queue-status?doctorName=${encodeURIComponent(doctorName)}&date=${date}`);
+            const data = await res.json();
+
+            if (data.success) {
+                document.getElementById('currentTokenNo').innerText = `#${data.currentToken}`;
+                const userTokenStr = document.getElementById('yourTokenNo').innerText.replace('#', '');
+                const userToken = parseInt(userTokenStr) || 0;
+
+                if (userToken > 0) {
+                    const waitDiff = userToken - data.currentToken;
+                    const estTime = waitDiff > 0 ? waitDiff * 10 : 0;
+                    document.getElementById('estWaitTime').innerText = `${estTime} mins`;
+                }
+            }
+        } catch (err) {
+            console.log("Queue update error", err);
+        }
     }
 </script>
 
